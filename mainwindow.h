@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 #include <QMainWindow>
+#include <QLineEdit>
 #include <math.h>
 
 QT_BEGIN_NAMESPACE
@@ -16,22 +17,23 @@ public:
     ~MainWindow();
 
 private slots:
-    void digits_numbers();
-    void on_pushButton_dot_clicked();
-    void operations();
-    void math_oper();
-    void on_pushButton_equally_released();
-    void on_pushButton_clearStr_clicked();
-
-    void on_pushButton_del_clicked();
-
-    void on_pushButton_fact_clicked();
+   void digitClicked();
+   void digits_numbers();
+   void on_pushButton_dot_clicked();
+   void operations();
+   void math_oper();
+   void egually();
+   void on_pushButton_clearStr_clicked();
+   void on_pushButton_del_clicked();
+   void on_pushButton_fact_clicked();
+   void unaryOperatorClicked();
+   void on_pushButton_clear_clicked();
 
 private:
-    void chek_buttom();
     double num_first;
+    double num_last;
     QString str;
-    bool flag = true;
+    bool flag = true,flag2=true;
 
     Ui::MainWindow *ui;
 };
