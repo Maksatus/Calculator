@@ -33,7 +33,6 @@ MainWindow::MainWindow(QWidget *parent)
         connect(ui->pushButton_minus,SIGNAL(clicked()),this,SLOT(math_oper()));
         connect(ui->pushButton_multip,SIGNAL(clicked()),this,SLOT(math_oper()));
         connect(ui->pushButton_division,SIGNAL(clicked()),this,SLOT(math_oper()));
-        connect(ui->pushButton_equally,SIGNAL(clicked()),this,SLOT(egually()));
 
 
         connect(ui->pushButton_sqrt,SIGNAL(clicked()),this,SLOT(unaryOperatorClicked()));
@@ -107,92 +106,69 @@ void MainWindow::operations()
     }
 }
 
-void MainWindow::math_oper()
+void MainWindow::on_pushButton_equally_released()
 {
-    num_last= ui->result_show->text().toDouble();
+    double labelNumber=0,secondNum=0;
+    secondNum = ui->result_show->text().toDouble();
     QString newlabel;
-    double sum;
 
-    QPushButton * button = static_cast<QPushButton*>(sender());
-     button->setCheckable(true);
-
-    if(flag){
+    if (flag){
+        str = str + QString::number(num_first);
         flag=false;
     }
-    else
+
+    if(ui->pushButton_plus->isCheckable())
     {
-            if (num_last==0.0){
-            num_first=num_last;
-        }
-        else if(ui->pushButton_plus->isCheckable())
-        {
-           qDebug()<<"+";
-           sum =num_first+num_last;
-           if(flag){
-                str = QString::number(num_last);
-                flag = false;
-           }else{
-                str = str + "+" + QString::number(num_last);
-           }
-            newlabel = QString::number(sum,'g',6);
-            ui->result_show->setText(newlabel);
-            ui->pushButton_plus->setCheckable(false);
-        }
-        else if(ui->pushButton_minus->isCheckable())
-        {
-            qDebug()<<"-";
-            num_first-=num_last;
-            str = str + "-" + QString::number(num_last);
-             newlabel = QString::number(num_first,'g',6);
-             ui->result_show->setText(newlabel);
-            ui->pushButton_plus->setCheckable(false);
-        }
-        else if(ui->pushButton_multip->isCheckable())
-        {
-            qDebug()<<"*";
-            num_first*=num_last;
-            if(flag){
-                 str = QString::number(num_last);
-                 flag = false;
-            }else{
-                 str = str + "*" + QString::number(num_last);
-            }
-             newlabel = QString::number(num_first,'g',6);
-             ui->result_show->setText(newlabel);
-            ui->pushButton_plus->setCheckable(false);
-        }
-        else if(ui->pushButton_division->isCheckable())
-        {
-            if (num_last==0.0){
-                qDebug()<<"!";
-                ui->result_show->setText("Деление на ноль невозможно");
-            }else{
-                qDebug()<<"/";
-                num_first/=num_last;
-                if(flag){
-                     str = QString::number(num_last);
-                     flag = false;
-                }else{
-                     str = str + "/" + QString::number(num_last);
-                }
-                 newlabel = QString::number(num_first,'g',6);
-                 ui->result_show->setText(newlabel);
-                 ui->pushButton_plus->setCheckable(false);
-            }
+        qDebug()<<"+";
+        labelNumber = num_first + secondNum;
+        str = str + "+" + QString::number(secondNum);
+        newlabel = QString::number(labelNumber,'g',6);
+        ui->result_show->setText(newlabel);
+        ui->pushButton_plus->setCheckable(false);
+    }
+    else if(ui->pushButton_minus->isCheckable())
+    {
+        qDebug()<<"-";
+        labelNumber = num_first - secondNum;
+        str = str + "-" + QString::number(secondNum);
+        newlabel = QString::number(labelNumber,'g',6);
+        ui->result_show->setText(newlabel);
+        ui->pushButton_minus->setCheckable(false);
+    }
+    else if(ui->pushButton_multip->isCheckable())
+    {
+        qDebug()<<"*";
+        labelNumber = num_first * secondNum;
+        str = str + "*" + QString::number(secondNum);
+        newlabel = QString::number(labelNumber,'g',6);
+        ui->result_show->setText(newlabel);
+        ui->pushButton_multip->setCheckable(false);
+    }
+    else if(ui->pushButton_division->isCheckable())
+    {
+        qDebug()<<"%";
+        if (secondNum==0.0){
+            qDebug()<<"!";
+            ui->result_show->setText("Деление на ноль невозможно");
+        }else{
+        labelNumber = num_first / secondNum;
+        newlabel = QString::number(labelNumber,'g',6);
+        str = str + "/" + QString::number(secondNum);
+        ui->result_show->setText(newlabel);
+        ui->pushButton_division->setCheckable(false);
         }
     }
-    ui->result_history->setText(str);
-    ui->result_show->setText(" ");
+
+ ui->result_history->setText(str);
 }
 
-void MainWindow::egually()
+void MainWindow::math_oper()
 {
-     QString newlabel;
-     num_last=ui->result_show->text().toDouble();
-     newlabel = QString::number(num_first+num_last,'g',6);
-     ui->result_show->setText(newlabel);
-     num_first = 0;
+    QPushButton * button = static_cast<QPushButton*>(sender());
+    num_first = ui->result_show->text().toDouble();
+    ui->result_show->setText(" ");
 
+    button->setCheckable(true);
 }
 
 void MainWindow::on_pushButton_clearStr_clicked()

@@ -22,7 +22,7 @@ private slots:
    void on_pushButton_dot_clicked();
    void operations();
    void math_oper();
-   void egually();
+   void on_pushButton_equally_released();
    void on_pushButton_clearStr_clicked();
    void on_pushButton_del_clicked();
    void on_pushButton_fact_clicked();
@@ -33,7 +33,7 @@ private:
     double num_first;
     double num_last;
     QString str;
-    bool flag = true,flag2=true;
+    bool flag = true;
 
     Ui::MainWindow *ui;
 };
